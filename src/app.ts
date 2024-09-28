@@ -15,7 +15,11 @@ app.use(express.json());
 // app.use('/api/v1/students');
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://sports-facility-v5.netlify.app'],
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'https://sports-facility-v5.netlify.app',
+    ],
     credentials: true,
   }),
 );
@@ -23,13 +27,11 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public')));
 
 const getAController = (req: Request, res: Response) => {
-  res.send(
-    'Hello, Next level Developer!. This project is about sports booking platform',
-  );
+  res.send('Hello, Next level Developer!. This project is about Forkify.');
 };
 // applications
 app.get('/', getAController);
-app.use('/api', router);
+app.use('/api/v6', router);
 
 app.use(globalErrorHandler);
 

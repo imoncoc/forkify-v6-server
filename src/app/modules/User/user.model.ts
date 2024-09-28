@@ -4,32 +4,45 @@ import validator from 'validator';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 
-const userSchema = new Schema<TUser, UserModel>({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: (value: string) => validator.isEmail(value),
-      message: '{VALUE} is not valid email type',
+const userSchema = new Schema<TUser, UserModel>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: (value: string) => validator.isEmail(value),
+        message: '{VALUE} is not valid email type',
+      },
+    },
+    password: {
+      type: String,
+      required: true,
+      select: false,
+    },
+    phone: { type: String, required: true },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+    },
+    address: { type: String, required: true },
+    profilePhoto: {
+      type: String,
+      default: null,
+    },
+    passwordChangedAt: {
+      type: Date,
     },
   },
-  password: {
-    type: String,
-    required: true,
-    select: false,
+  {
+    timestamps: true,
+    virtuals: true,
   },
-  phone: { type: String, required: true },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-  },
-  address: { type: String, required: true },
-});
+);
 
 // pre save middleware / hook
 userSchema.pre('save', async function (next) {

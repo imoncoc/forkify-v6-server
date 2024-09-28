@@ -10,6 +10,11 @@ export interface TUser {
   phone: string;
   role: 'admin' | 'user';
   address: string;
+  passwordChangedAt?: Date;
+  mobileNumber?: string;
+  profilePhoto?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface UserModel extends Model<TUser> {
