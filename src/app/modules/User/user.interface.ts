@@ -15,6 +15,8 @@ export interface TUser {
   profilePhoto?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  isDeleted: boolean;
+  status: 'in-progress' | 'blocked';
 }
 
 export interface UserModel extends Model<TUser> {
