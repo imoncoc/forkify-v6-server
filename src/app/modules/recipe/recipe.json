@@ -1,0 +1,29 @@
+{
+  "title": "Cauliflower Pizza Crust (with BBQ Chicken Pizza)",
+  "ingredients": [
+    "66fa2a8aca06b878c48820a7",
+    "66fa2b55ca06b878c48820a9",
+    "66fa2bacca06b878c48820ab",
+    "66fa2bd5ca06b878c48820ad",
+    "66fa2c0dca06b878c48820af",
+    "66fa2c22ca06b878c48820b1",
+    "66fa2c38ca06b878c48820b3",
+    "66fa2c65ca06b878c48820b7",
+    "66fa2c4eca06b878c48820b5"
+  ],
+  "timeFun": [
+    {
+      "name": "Preparation",
+      "time": 10
+    },
+    {
+      "name": "Cooking",
+      "time": 20
+    },
+    {
+      "name": "Marinating",
+      "time": 30
+    }
+  ],
+  "tags": "non-vegetarian"
+}
