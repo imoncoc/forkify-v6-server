@@ -4,10 +4,11 @@ import sendResponse from '../../utils/sendResponse';
 import { userServices } from './user.service';
 
 const createUser = catchAsync(async (req, res) => {
-  const result = await userServices.createUserIntoDB({
-    ...JSON.parse(req.body.data),
-    profilePhoto: req.file?.path,
-  });
+  // const result = await userServices.createUserIntoDB({
+  //   ...JSON.parse(req.body.data),
+  //   profilePhoto: req.file?.path,
+  // });
+  const result = await userServices.createUserIntoDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

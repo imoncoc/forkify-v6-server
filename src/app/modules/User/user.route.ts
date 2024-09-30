@@ -8,12 +8,12 @@ const router = express.Router();
 
 router.post(
   '/signup',
-  multerUpload.single('image'),
+  // multerUpload.single('image'),
   // (req: Request, res: Response, next: NextFunction) => {
   //   req.body.data = JSON.parse(req.body.data);
   //   next();
   // },
-  // validateRequest(userValidation.createUserValidationSchema),
+  validateRequest(userValidation.createUserValidationSchema),
   UserControllers.createUser,
 );
 

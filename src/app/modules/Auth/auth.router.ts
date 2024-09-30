@@ -4,9 +4,15 @@ import { AuthValidation } from './auth.validation';
 import { AuthControllers } from './auth.controller';
 import auth from '../../middlewares/auth';
 import { USER_ROLE } from '../User/user.constant';
+import { userValidation } from '../User/user.validation';
 
 const router = express.Router();
 
+router.post(
+  '/register',
+  validateRequest(userValidation.createUserValidationSchema),
+  AuthControllers.registerUser,
+);
 router.post(
   '/login',
   validateRequest(AuthValidation.loginValidationSchema),

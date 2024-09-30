@@ -28,6 +28,7 @@ const userSchema = new Schema<TUser, UserModel>(
     role: {
       type: String,
       enum: ['user', 'admin'],
+      default: 'user',
     },
     address: { type: String, required: true },
     profilePhoto: {
@@ -72,6 +73,10 @@ userSchema.post('save', function (doc, next) {
   doc.password = '';
   next();
 });
+
+userSchema.statics.isUserExistsByEmail = async function (email: string) {
+  return await User.findOne({ email }).select('+password');
+};
 
 userSchema.statics.isUsersExistsByCustomId = async function (email: string) {
   return await User.findOne({ email }).select('+password');
