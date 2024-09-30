@@ -20,6 +20,30 @@ const createRecipe = catchAsync(async (req, res) => {
   });
 });
 
+const getAllRecipe = catchAsync(async (req, res) => {
+  const result = await recipeServices.getAllRecipeFromDB(req.query);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Recipe retrieved successfully',
+    data: result,
+  });
+});
+const getSingleRecipe = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await recipeServices.getSingleRecipeFromDB(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Recipe retrieved successfully',
+    data: result,
+  });
+});
+
 export const recipeControllers = {
   createRecipe,
+  getAllRecipe,
+  getSingleRecipe,
 };

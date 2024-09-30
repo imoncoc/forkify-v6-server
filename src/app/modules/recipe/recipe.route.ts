@@ -14,4 +14,15 @@ router.post(
   recipeControllers.createRecipe,
 );
 
+router.get(
+  '/recipe',
+  //   auth(USER_ROLE.admin, USER_ROLE.user),
+  recipeControllers.getAllRecipe,
+);
+router.get(
+  '/recipe/:id',
+  //   auth(USER_ROLE.admin, USER_ROLE.user),
+  recipeControllers.getSingleRecipe,
+);
+
 export const recipeRoutes = router;

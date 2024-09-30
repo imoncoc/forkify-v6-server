@@ -48,6 +48,7 @@ const recipeSchema: Schema = new mongoose.Schema<TRecipe>(
     ingredients: {
       type: [String],
       required: [true, 'Ingredients are required.'],
+      ref: 'Ingredient',
     },
     timeFun: {
       type: [timeSchema],
