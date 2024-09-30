@@ -14,6 +14,8 @@ const registerUserFromDB = async (payload: TUser) => {
   // checking if the user is exist
   const user = await User.isUserExistsByEmail(payload?.email);
 
+  console.log(user);
+
   if (user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is already exist!');
   }
@@ -53,41 +55,91 @@ const registerUserFromDB = async (payload: TUser) => {
   };
 };
 
+// const loginUser = async (payload: TLoginUser) => {
+//   //   const isUserExists = await User.findOne({ email: payload?.email });
+//   const user = await User.isUsersExistsByCustomId(payload?.email);
+
+//   if (!user) {
+//     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
+//   }
+
+//   // Check is password is correct
+//   //   const isPasswordMatched = await bcrypt.compare(
+//   //     payload?.password,
+//   //     isUserExists?.password,
+//   //   );
+//   const isPasswordMatched = await User.isPasswordMatched(
+//     payload?.password,
+//     user?.password,
+//   );
+
+//   if (!isPasswordMatched) {
+//     throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched.');
+//   }
+
+//   // Create token sent to the client
+//   const jwtPayload = {
+//     userEmail: user.email,
+//     role: user.role,
+//   };
+
+//   const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
+//     expiresIn: config.jwt_access_expires_in,
+//   });
+
+//   return { accessToken, user };
+// };
+
 const loginUser = async (payload: TLoginUser) => {
-  //   const isUserExists = await User.findOne({ email: payload?.email });
-  const user = await User.isUsersExistsByCustomId(payload?.email);
+  // checking if the user is exist
+  const user = await User.isUserExistsByEmail(payload?.email);
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
   }
 
-  // Check is password is correct
-  //   const isPasswordMatched = await bcrypt.compare(
-  //     payload?.password,
-  //     isUserExists?.password,
-  //   );
-  const isPasswordMatched = await User.isPasswordMatched(
-    payload?.password,
-    user?.password,
-  );
+  // checking if the user is blocked
 
-  if (!isPasswordMatched) {
-    throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched.');
+  const userStatus = user?.status;
+
+  if (userStatus === 'blocked') {
+    throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked!');
   }
 
-  // Create token sent to the client
+  //checking if the password is correct
+
+  if (!(await User.isPasswordMatched(payload?.password, user?.password)))
+    throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched');
+
+  //create token and sent to the  client
+
   const jwtPayload = {
-    userEmail: user.email,
+    userId: user._id as string,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    profilePhoto: user.profilePhoto,
     role: user.role,
+    status: user.status,
   };
 
-  const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
-    expiresIn: config.jwt_access_expires_in,
-  });
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string,
+  );
 
-  return { accessToken, user };
+  const refreshToken = createToken(
+    jwtPayload,
+    config.jwt_refresh_secret as string,
+    config.jwt_refresh_expires_in as string,
+  );
+
+  return {
+    accessToken,
+    refreshToken,
+  };
 };
-
 const changePassword = async (
   userData: JwtPayload,
   payload: { oldPassword: string; newPassword: string },
