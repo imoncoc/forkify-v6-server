@@ -6,10 +6,11 @@ import { recipeServices } from './recipe.service';
 const createRecipe = catchAsync(async (req, res) => {
   console.log('req.body: ', req.body);
 
-  const result = await recipeServices.createRecipeIntoDB({
-    ...JSON.parse(req.body.data),
-    thumbnail: req.file?.path,
-  });
+  // const result = await recipeServices.createRecipeIntoDB({
+  //   ...JSON.parse(req.body.data),
+  //   thumbnail: req.file?.path,
+  // });
+  const result = await recipeServices.createRecipeIntoDB(req.body);
 
   //   const result = await recipeServices.createRecipeIntoDB(req.body);
   sendResponse(res, {
@@ -41,9 +42,21 @@ const getSingleRecipe = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getUserRecipe = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await recipeServices.getUserRecipesFromDB(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Recipe retrieved successfully',
+    data: result,
+  });
+});
 
 export const recipeControllers = {
   createRecipe,
   getAllRecipe,
   getSingleRecipe,
+  getUserRecipe,
 };

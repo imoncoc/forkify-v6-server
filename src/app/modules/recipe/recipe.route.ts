@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.post(
   '/recipe',
-  multerUpload.single('image'),
-  //   validateRequest(IngredientValidations.CreateIngredientValidation),
+  // multerUpload.single('image'),
+  // validateRequest(IngredientValidations.CreateIngredientValidation),
   auth(USER_ROLE.admin, USER_ROLE.user),
   recipeControllers.createRecipe,
 );
@@ -23,6 +23,11 @@ router.get(
   '/recipe/:id',
   //   auth(USER_ROLE.admin, USER_ROLE.user),
   recipeControllers.getSingleRecipe,
+);
+router.get(
+  '/user-recipe/:id',
+  //   auth(USER_ROLE.admin, USER_ROLE.user),
+  recipeControllers.getUserRecipe,
 );
 
 export const recipeRoutes = router;

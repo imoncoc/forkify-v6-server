@@ -121,6 +121,7 @@ const loginUser = async (payload: TLoginUser) => {
     profilePhoto: user.profilePhoto,
     role: user.role,
     status: user.status,
+    address: user.address,
   };
 
   const accessToken = createToken(
@@ -224,7 +225,7 @@ const forgetPassword = async (userEmail: string) => {
     '10m',
   );
 
-  const resetUILink = `${config.base_url_frontend}?id=${user.email}&token=${resetToken}`;
+  const resetUILink = `${config.base_url_frontend}/forget-password/id=${user.email}&token=${resetToken}`;
 
   sendEmail(user.email, resetUILink);
 

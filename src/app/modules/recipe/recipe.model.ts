@@ -17,7 +17,7 @@ const recipeSchema: Schema = new mongoose.Schema<TRecipe>(
   {
     title: {
       type: String,
-      required: [true, 'Ingredient title is required.'],
+      required: [true, 'Recipe title is required.'],
     },
     isDeleted: {
       type: Boolean,
@@ -34,24 +34,23 @@ const recipeSchema: Schema = new mongoose.Schema<TRecipe>(
       default: 0,
     },
     upvote: {
-      type: [String], // Array of user IDs or some identifier
+      type: [String],
       default: [],
     },
     downvote: {
-      type: [String], // Array of user IDs or some identifier
+      type: [String],
       default: [],
     },
     comments: {
-      type: [String], // Array of comment IDs or strings
+      type: [String],
       default: [],
     },
     ingredients: {
-      type: [String],
+      type: [String], // Or use ObjectId if referencing another model
       required: [true, 'Ingredients are required.'],
-      ref: 'Ingredient',
     },
     timeFun: {
-      type: [timeSchema],
+      type: Number, // Make sure timeSchema is defined
       required: [true, 'Time information is required.'],
     },
     thumbnail: {
@@ -59,11 +58,21 @@ const recipeSchema: Schema = new mongoose.Schema<TRecipe>(
       required: [true, 'Thumbnail URL is required.'],
     },
     tags: {
+      type: [String], // Updated to match the interface
+      default: [],
+    },
+    description: {
       type: String,
+      required: true,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
   },
   {
-    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    timestamps: true,
   },
 );
 

@@ -3,6 +3,7 @@ import { TUser, UserModel } from './user.interface';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import config from '../../config';
+import { boolean } from 'joi';
 
 const userSchema = new Schema<TUser, UserModel>(
   {
@@ -46,6 +47,16 @@ const userSchema = new Schema<TUser, UserModel>(
       type: String,
       enum: ['in-progress', 'blocked'],
       default: 'in-progress',
+    },
+    premiumMembership: {
+      type: Boolean,
+      default: false,
+    },
+    followers: {
+      type: String,
+    },
+    following: {
+      type: String,
     },
   },
   {

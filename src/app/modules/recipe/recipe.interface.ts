@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongoose';
+
 type TTime = {
   name: string;
   time: number;
@@ -12,7 +14,9 @@ export type TRecipe = {
   downvote?: string[];
   comments?: string[];
   ingredients: string[];
-  timeFun: TTime[];
+  timeFun: number;
   thumbnail: string;
-  tags: string;
+  tags: string[];
+  description: string;
+  user: ObjectId;
 };

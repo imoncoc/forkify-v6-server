@@ -17,6 +17,9 @@ export interface TUser {
   updatedAt?: Date;
   isDeleted: boolean;
   status: 'in-progress' | 'blocked';
+  premiumMembership?: boolean;
+  followers?: string[];
+  following?: string[];
 }
 
 export interface UserModel extends Model<TUser> {
