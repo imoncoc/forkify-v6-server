@@ -18,7 +18,6 @@ const updateUserIntoDB = async (userId: string, userData: TUser) => {
 
   const objectId = new mongoose.Types.ObjectId(userId);
   const result = await User.findByIdAndUpdate(objectId, userData);
-  console.log('result service: ', result);
 
   // eslint-disable-next-line no-unused-vars
   // const { password, ...userWithoutPassword } = result.toObject();

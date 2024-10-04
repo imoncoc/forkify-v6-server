@@ -27,7 +27,7 @@ const recipeSchema: Schema = new mongoose.Schema<TRecipe>(
       type: Boolean,
       default: false,
     },
-    ratting: {
+    rating: {
       type: Number,
       min: 0,
       max: 5,
@@ -70,6 +70,30 @@ const recipeSchema: Schema = new mongoose.Schema<TRecipe>(
       ref: 'User',
       required: true,
     },
+    publish: {
+      type: String,
+      required: true,
+      default: 'pending',
+    },
+    ratings: [
+      {
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+          required: true,
+        },
+        rating: {
+          type: Number,
+          required: true,
+          min: 1,
+          max: 5,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

@@ -26,8 +26,24 @@ router.get(
 );
 router.get(
   '/user-recipe/:id',
-  //   auth(USER_ROLE.admin, USER_ROLE.user),
+  // auth(USER_ROLE.admin, USER_ROLE.user),
   recipeControllers.getUserRecipe,
+);
+router.patch(
+  '/user-recipe/:id',
+  auth(USER_ROLE.user),
+  recipeControllers.updateRecipe,
+);
+
+router.post(
+  '/user-recipe/vote/:id',
+  // auth(USER_ROLE.admin, USER_ROLE.user),
+  recipeControllers.updateUpvoteRecipe,
+);
+router.post(
+  '/user-recipe/ratings/:id',
+  // auth(USER_ROLE.admin, USER_ROLE.user),
+  recipeControllers.updateAnyUserRating,
 );
 
 export const recipeRoutes = router;

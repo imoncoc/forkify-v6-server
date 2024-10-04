@@ -19,7 +19,6 @@ const createUser = catchAsync(async (req, res) => {
 
 const updateUser = catchAsync(async (req, res) => {
   const { userId } = req.params;
-  console.log('userId controller: ', userId);
 
   const result = await userServices.updateUserIntoDB(userId, {
     ...JSON.parse(req.body.data),

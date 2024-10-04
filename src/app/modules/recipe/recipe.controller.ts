@@ -4,8 +4,6 @@ import sendResponse from '../../utils/sendResponse';
 import { recipeServices } from './recipe.service';
 
 const createRecipe = catchAsync(async (req, res) => {
-  console.log('req.body: ', req.body);
-
   // const result = await recipeServices.createRecipeIntoDB({
   //   ...JSON.parse(req.body.data),
   //   thumbnail: req.file?.path,
@@ -44,7 +42,7 @@ const getSingleRecipe = catchAsync(async (req, res) => {
 });
 const getUserRecipe = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await recipeServices.getUserRecipesFromDB(id);
+  const result = await recipeServices.getUserRecipesFromDB(id, req.query);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -54,9 +52,47 @@ const getUserRecipe = catchAsync(async (req, res) => {
   });
 });
 
+const updateRecipe = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await recipeServices.updateRecipeIntoDB(id, req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Recipe update successfully',
+    data: result,
+  });
+});
+
+const updateUpvoteRecipe = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await recipeServices.updateUpvoteRecipeIntoDB(id, req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Recipe voted successfully',
+    data: result,
+  });
+});
+const updateAnyUserRating = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await recipeServices.updateAnyUserRatingIntoDB(id, req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Recipe rating update successful',
+    data: result,
+  });
+});
+
 export const recipeControllers = {
   createRecipe,
   getAllRecipe,
   getSingleRecipe,
   getUserRecipe,
+  updateRecipe,
+  updateUpvoteRecipe,
+  updateAnyUserRating,
 };

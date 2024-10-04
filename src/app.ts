@@ -17,8 +17,8 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
+      'https://forkify-gamma-sand.vercel.app/',
       'http://localhost:5173',
-      'https://sports-facility-v5.netlify.app',
     ],
     credentials: true,
   }),
