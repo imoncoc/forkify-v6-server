@@ -1,6 +1,5 @@
 import mongoose, { model, Schema } from 'mongoose';
-
-import { TComment } from './comment.interface';
+import { TComment } from './Comment.interface';
 
 const commentSchema: Schema = new mongoose.Schema<TComment>(
   {
@@ -19,6 +18,10 @@ const commentSchema: Schema = new mongoose.Schema<TComment>(
       required: [true, 'Comment is required.'],
     },
     isDeleted: {
+      type: String,
+      default: false,
+    },
+    commentCanDelete: {
       type: String,
       default: false,
     },

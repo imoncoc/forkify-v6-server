@@ -14,8 +14,6 @@ const registerUserFromDB = async (payload: TUser) => {
   // checking if the user is exist
   const user = await User.isUserExistsByEmail(payload?.email);
 
-  console.log(user);
-
   if (user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is already exist!');
   }
@@ -228,8 +226,6 @@ const forgetPassword = async (userEmail: string) => {
   const resetUILink = `${config.base_url_frontend}/forget-password/id=${user.email}&token=${resetToken}`;
 
   sendEmail(user.email, resetUILink);
-
-  console.log('resetUILink: ', resetUILink);
 };
 
 const resetPassword = async (

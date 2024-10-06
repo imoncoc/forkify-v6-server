@@ -1,7 +1,7 @@
 import express from 'express';
-import { CommentControllers } from './comment.controller';
 import auth from '../../middlewares/auth';
 import { USER_ROLE } from '../User/user.constant';
+import { CommentControllers } from './Comment.controller';
 
 const router = express.Router();
 
@@ -11,8 +11,8 @@ router.post(
   CommentControllers.createNewComment,
 );
 router.get(
-  '/comments/:userId',
-  auth(USER_ROLE.admin, USER_ROLE.user),
+  '/comments/:recipeId',
+  // auth(USER_ROLE.admin, USER_ROLE.user),
   CommentControllers.getAllCommentRecipe,
 );
 

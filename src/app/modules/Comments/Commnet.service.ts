@@ -3,12 +3,12 @@ import { Recipe } from '../recipe/recipe.model';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 import { Comment } from './Comment.model';
-import { TComment } from './comment.interface';
+import { TComment } from './Comment.interface';
+import { verifyPrivateToken } from '../../utils/verifyToken';
 
 const createNewCommentIntoDB = async (recipeId: string, userData: TComment) => {
   const { userId, comment } = userData;
   const recipe = await Recipe.findById(recipeId);
-  console.log('hit service');
 
   if (!recipe) {
     throw new Error('Recipe not found');
@@ -26,20 +26,33 @@ const createNewCommentIntoDB = async (recipeId: string, userData: TComment) => {
   return result;
 };
 
-const getAllCommentFromDB = async (userId: string) => {
+const getAllCommentFromDB = async (recipeId: string, token: string) => {
   //   const result = await Comment.find();
 
   //   return result;
+  let verifyUserId;
+  if (token) {
+    verifyUserId = verifyPrivateToken(token);
+  }
 
-  const comments = await Comment.find().lean(); // Using lean() to work with plain objects
+  const comments = await Comment.find({ recipeId, isDeleted: false })
+    .populate('userId')
+    .lean(); // Using lean() to work with plain objects
 
   // Map through the comments and add the commentCanDelete property
-  const commentsWithDeleteFlag = comments.map((comment) => ({
-    ...comment,
-    commentCanDelete: comment.userId.toString() === userId.toString(),
-  }));
+  let result;
+  if (verifyUserId) {
+    result = comments?.map((comment) => ({
+      ...comment,
+      commentCanDelete: comment.userId === verifyUserId,
+    }));
+    return result;
+  } else {
+    result = comments;
+  }
 
-  return commentsWithDeleteFlag;
+  // return commentsWithDeleteFlag;
+  return comments;
 };
 
 const deleteCommentFromDB = async (id: string) => {

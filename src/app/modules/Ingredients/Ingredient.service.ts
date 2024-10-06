@@ -7,7 +7,6 @@ import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 
 const createIngredientIntoDB = async (ingredient: TIngredient) => {
-  console.log('ingredient: ', ingredient);
   const result = await Ingredient.create(ingredient);
   return result;
 };

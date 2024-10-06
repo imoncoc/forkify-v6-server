@@ -6,8 +6,6 @@ import { Request, Response } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
 
 const createIngredient = catchAsync(async (req, res) => {
-  console.log('req.body: ', req.body);
-
   const result = await ingredientServices.createIngredientIntoDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,

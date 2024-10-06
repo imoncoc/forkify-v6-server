@@ -37,7 +37,7 @@ router.patch(
 
 router.post(
   '/user-recipe/vote/:id',
-  // auth(USER_ROLE.admin, USER_ROLE.user),
+  auth(USER_ROLE.admin, USER_ROLE.user),
   recipeControllers.updateUpvoteRecipe,
 );
 router.post(

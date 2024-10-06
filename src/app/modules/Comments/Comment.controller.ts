@@ -2,11 +2,10 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { commentServices } from './Commnet.service';
+import { verifyPrivateToken } from '../../utils/verifyToken';
 
 const createNewComment = catchAsync(async (req, res) => {
-  console.log('hit controller');
   const { recipeId } = req.params;
-  console.log({ recipeId });
 
   const result = await commentServices.createNewCommentIntoDB(
     recipeId,
@@ -21,8 +20,12 @@ const createNewComment = catchAsync(async (req, res) => {
 });
 
 const getAllCommentRecipe = catchAsync(async (req, res) => {
-  const { userId } = req.params;
-  const result = await commentServices.getAllCommentFromDB(userId);
+  console.log({ req });
+  const token = req.headers.authorization || '';
+  const { userId, recipeId } = req.params;
+
+  const result = await commentServices.getAllCommentFromDB(recipeId, token);
+  console.log({ userId, recipeId });
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

@@ -7,4 +7,5 @@ export type TComment = {
   createdAt?: Date;
   updatedAt?: Date;
   isDeleted?: boolean;
+  commentCanDelete?: boolean;
 };

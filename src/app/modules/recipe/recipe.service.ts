@@ -9,7 +9,10 @@ const createRecipeIntoDB = async (recipe: TRecipe) => {
 };
 
 const getAllRecipeFromDB = async (query: Record<string, unknown>) => {
-  const ingredientQuery = new QueryBuilder(Recipe.find(), query)
+  const ingredientQuery = new QueryBuilder(
+    Recipe.find().populate('user'),
+    query,
+  )
     .filter()
     .sort()
     .paginate()
@@ -106,8 +109,6 @@ const updateAnyUserRatingIntoDB = async (
   userData: { userId: string; ratingValue: number },
 ) => {
   const { userId, ratingValue } = userData;
-
-  console.log({ userId, ratingValue });
 
   try {
     // Find the recipe by ID
