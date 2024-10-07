@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import { TUser, UserModel } from './user.interface';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
@@ -53,10 +53,14 @@ const userSchema = new Schema<TUser, UserModel>(
       default: false,
     },
     followers: {
-      type: String,
+      ref: 'User',
+      type: [String],
+      default: [],
     },
     following: {
-      type: String,
+      ref: 'User',
+      type: [String],
+      default: [],
     },
   },
   {

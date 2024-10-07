@@ -20,12 +20,10 @@ const createNewComment = catchAsync(async (req, res) => {
 });
 
 const getAllCommentRecipe = catchAsync(async (req, res) => {
-  console.log({ req });
   const token = req.headers.authorization || '';
   const { userId, recipeId } = req.params;
 
   const result = await commentServices.getAllCommentFromDB(recipeId, token);
-  console.log({ userId, recipeId });
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

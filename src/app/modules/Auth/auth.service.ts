@@ -120,6 +120,9 @@ const loginUser = async (payload: TLoginUser) => {
     role: user.role,
     status: user.status,
     address: user.address,
+    following: user.following,
+    followers: user.followers,
+    premiumMembership: user.premiumMembership,
   };
 
   const accessToken = createToken(

@@ -32,7 +32,41 @@ const updateUser = catchAsync(async (req, res) => {
   });
 });
 
+const followUser = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+  const { targetUserId } = req.body;
+
+  // Call the service to handle following/unfollowing logic
+  const result = await userServices.followOrUnfollowIntoDB(
+    userId,
+    targetUserId,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: result.following
+      ? 'User followed successfully'
+      : 'User unfollow successfully',
+    data: result,
+  });
+});
+
+const getAllUserFollowers = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await userServices.getAllUserFollowersFromDB(id, req.query);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Followers retrieved successfully',
+    data: result,
+  });
+});
+
 export const UserControllers = {
   createUser,
   updateUser,
+  followUser,
+  getAllUserFollowers,
 };
